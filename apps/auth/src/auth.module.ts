@@ -6,6 +6,7 @@ import { LoggerModule } from '@app/common';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
+import { LocalStrategys } from './strategies/local.strategy';
 
 @Module({
   imports: [
@@ -22,15 +23,15 @@ import * as Joi from 'joi';
     }),
     ConfigModule.forRoot({
       isGlobal: true,
-      validationSchema: {
+      validationSchema: Joi.object({
         MONGODB_URI: Joi.string().required(),
         JWT_SECRET: Joi.string().required(),
         JWT_EXPIRES_IN: Joi.string().required(),
         PORT: Joi.number().required(),
-      },
+      }),
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, LocalStrategys],
 })
 export class AuthModule {}

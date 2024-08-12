@@ -19,10 +19,10 @@ import * as Joi from 'joi';
     LoggerModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      validationSchema: {
+      validationSchema: Joi.object({
         MONGODB_URI: Joi.string().required(),
         PORT: Joi.number().required(),
-      },
+      }),
     }),
   ],
   controllers: [ReservationsController],
